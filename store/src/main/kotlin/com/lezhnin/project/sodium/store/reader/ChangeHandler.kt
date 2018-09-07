@@ -1,4 +1,4 @@
-package com.lezhnin.project.sodium.store
+package com.lezhnin.project.sodium.store.reader
 
 import io.vertx.config.ConfigChange
 import io.vertx.core.Handler

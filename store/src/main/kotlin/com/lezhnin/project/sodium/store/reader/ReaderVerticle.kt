@@ -1,4 +1,4 @@
-package com.lezhnin.project.sodium.store
+package com.lezhnin.project.sodium.store.reader
 
 import io.vertx.config.ConfigChange
 import io.vertx.config.ConfigRetriever
@@ -10,7 +10,10 @@ import io.vertx.kotlin.config.ConfigRetrieverOptions
 import io.vertx.kotlin.config.ConfigStoreOptions
 
 class ReaderVerticle : AbstractVerticle() {
-    private val logger = LoggerFactory.getLogger(ReaderVerticle::class.java)
+    companion object {
+        private val logger = LoggerFactory.getLogger(ReaderVerticle::class.java)
+    }
+
     private val retrievers = mutableMapOf<String, ConfigRetriever>()
 
     override fun start() {
@@ -82,4 +85,3 @@ class ReaderVerticle : AbstractVerticle() {
         }
     }
 }
-
