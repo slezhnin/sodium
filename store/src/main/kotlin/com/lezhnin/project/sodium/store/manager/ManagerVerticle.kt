@@ -29,7 +29,7 @@ class ManagerVerticle : AbstractVerticle() {
         vertx.sharedData().getAsyncMap<String, JsonObject>("sodiumMap") {
             if (it.succeeded()) {
                 it.result().get(name) { ar ->
-                    if (ar.succeeded()) {
+                    if (ar.succeeded() && ar.result() != null) {
                         logger.debug("Success gut map sodiumMap key: $name")
                         response.putHeader("content-type", "application/json")
                                 .write(ar.result().encodePrettily())

@@ -47,7 +47,7 @@ class ReaderVerticle : AbstractVerticle() {
             )
         }
         val options = ConfigRetrieverOptions(
-                scanPeriod = json.getLong("scanPeriod"),
+                scanPeriod = json.getLong("scanPeriod", 5000),
                 stores = stores
         )
 
