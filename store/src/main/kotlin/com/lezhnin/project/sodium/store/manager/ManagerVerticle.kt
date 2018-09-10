@@ -1,6 +1,7 @@
 package com.lezhnin.project.sodium.store.manager
 
 import io.vertx.core.AbstractVerticle
+import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.LoggerFactory
@@ -31,8 +32,10 @@ class ManagerVerticle : AbstractVerticle() {
                 it.result().get(name) { ar ->
                     if (ar.succeeded() && ar.result() != null) {
                         logger.debug("Success gut map sodiumMap key: $name")
+                        val data = Buffer.buffer(ar.result().encode())
                         response.putHeader("content-type", "application/json")
-                                .write(ar.result().encodePrettily())
+                                .putHeader("content-length", data.length().toString())
+                                .write(data)
                                 .end()
                     } else {
                         logger.error("Error get map sodiumMap key: $name")
