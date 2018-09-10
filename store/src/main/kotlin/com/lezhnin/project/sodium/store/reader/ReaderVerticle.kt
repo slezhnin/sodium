@@ -17,7 +17,10 @@ class ReaderVerticle : AbstractVerticle() {
     private val retrievers = mutableMapOf<String, ConfigRetriever>()
 
     override fun start() {
-        val options = ConfigRetrieverOptions(scanPeriod = 10000)
+        val options = ConfigRetrieverOptions(
+                includeDefaultStores = true,
+                scanPeriod = 10000
+        )
         val retriever = ConfigRetriever.create(getVertx(), options)
 
         retriever.getConfig(this::gotConfig)
