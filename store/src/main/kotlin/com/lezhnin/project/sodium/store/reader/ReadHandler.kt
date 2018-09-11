@@ -1,5 +1,6 @@
 package com.lezhnin.project.sodium.store.reader
 
+import com.lezhnin.project.sodium.store.Sodium
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
 import io.vertx.core.Vertx
@@ -17,17 +18,17 @@ class ReadHandler(private val vertx: Vertx, private val name: String) : Handler<
 
     fun read(json: JsonObject?) {
         vertx.sharedData()
-                .getAsyncMap<String, JsonObject>("sodiumMap") {
+                .getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) {
                     if (it.succeeded()) {
                         it.result().put(name, json) { result ->
                             if (result.succeeded()) {
-                                logger.debug("Success put into map sodiumMap key: $name")
+                                logger.debug("Success put into map ${Sodium.MAP_NAME} key: $name")
                             } else {
-                                logger.error("Error put into map sodiumMap key: $name")
+                                logger.error("Error put into map ${Sodium.MAP_NAME} key: $name")
                             }
                         }
                     } else {
-                        logger.error("Error getting AsyncMap: sodiumMap", it.cause())
+                        logger.error("Error getting AsyncMap: ${Sodium.MAP_NAME}", it.cause())
                     }
                 }
     }

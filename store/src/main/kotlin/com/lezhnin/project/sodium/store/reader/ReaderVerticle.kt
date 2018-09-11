@@ -1,5 +1,6 @@
 package com.lezhnin.project.sodium.store.reader
 
+import com.lezhnin.project.sodium.store.*
 import io.vertx.config.ConfigChange
 import io.vertx.config.ConfigRetriever
 import io.vertx.core.AbstractVerticle
@@ -41,16 +42,16 @@ class ReaderVerticle : AbstractVerticle() {
     }
 
     private fun configRetriever(json: JsonObject): ConfigRetriever {
-        val stores = json.getJsonArray("stores").map { obj ->
+        val stores = json.getJsonArray(Store.STORES).map { obj ->
             val store = obj as JsonObject
             ConfigStoreOptions(
-                    type = store.getString("type"),
-                    format = store.getString("format"),
-                    config = store.getJsonObject("config")
+                    type = store.getString(Store.TYPE),
+                    format = store.getString(Store.FORMAT),
+                    config = store.getJsonObject(Store.CONFIG)
             )
         }
         val options = ConfigRetrieverOptions(
-                scanPeriod = json.getLong("scanPeriod", 5000),
+                scanPeriod = json.getLong(Store.SCAN_PERIOD, 5000),
                 stores = stores
         )
 

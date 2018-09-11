@@ -1,40 +1,29 @@
 package com.lezhnin.project.sodium.store.start
 
+import com.lezhnin.project.sodium.store.Store
 import com.lezhnin.project.sodium.store.manager.ManagerVerticle
 import com.lezhnin.project.sodium.store.reader.ReaderVerticle
-import io.vertx.core.*
-import io.vertx.core.json.JsonObject
+import io.vertx.core.AbstractVerticle
+import io.vertx.core.DeploymentOptions
+import io.vertx.core.Future
+import io.vertx.core.Launcher
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.obj
 
 class SodiumVerticle : AbstractVerticle() {
-    private var readerId = ""
-    private var managerId = ""
+    private val reader = ReaderVerticle()
+    private val manager = ManagerVerticle()
 
     override fun start(startFuture: Future<Void>) {
-            val readerFuture = Future.future<String>()
-            val managerFuture = Future.future<String>()
-            val options = DeploymentOptions(JsonObject().put("config", config()))
+        val options = DeploymentOptions(json { obj(Store.CONFIG to config()) })
 
-            getVertx().deployVerticle(ReaderVerticle(), options, readerFuture.completer())
-            getVertx().deployVerticle(ManagerVerticle(), options, managerFuture.completer())
-
-            CompositeFuture.join(readerFuture, managerFuture).setHandler {
-                startFuture.complete()
-                if (it.succeeded()) {
-                    readerId = it.result().resultAt(0)
-                    managerId = it.result().resultAt(1)
-                } else {
-                    throw it.cause()
-                }
-            }
+        getVertx().deployVerticle(reader, options)
+        getVertx().deployVerticle(manager, options)
     }
 
     override fun stop() {
-        if (managerId != "") {
-            getVertx().undeploy(managerId)
-        }
-        if (readerId != "") {
-            getVertx().undeploy(readerId)
-        }
+        getVertx().undeploy(manager.deploymentID())
+        getVertx().undeploy(reader.deploymentID())
     }
 }
 

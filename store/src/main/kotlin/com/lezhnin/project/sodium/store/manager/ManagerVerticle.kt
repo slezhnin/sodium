@@ -1,5 +1,7 @@
 package com.lezhnin.project.sodium.store.manager
 
+import com.lezhnin.project.sodium.store.Sodium
+import com.lezhnin.project.sodium.store.Web
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpServerResponse
@@ -15,10 +17,10 @@ class ManagerVerticle : AbstractVerticle() {
     override fun start() {
         val router = Router.router(getVertx())
 
-        router.route("/dictionary/:name")
+        router.route("${Web.PATH}:${Web.PARAMETER}")
                 .handler { context ->
                     sendData(
-                            name = context.request().getParam("name"),
+                            name = context.request().getParam(Web.PARAMETER),
                             response = context.response()
                     )
                 }
@@ -27,25 +29,25 @@ class ManagerVerticle : AbstractVerticle() {
     }
 
     private fun sendData(name: String, response: HttpServerResponse) {
-        vertx.sharedData().getAsyncMap<String, JsonObject>("sodiumMap") {
+        vertx.sharedData().getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) {
             if (it.succeeded()) {
                 it.result().get(name) { ar ->
                     if (ar.succeeded() && ar.result() != null) {
-                        logger.debug("Success gut map sodiumMap key: $name")
+                        logger.debug("Success get map ${Sodium.MAP_NAME} key: $name")
                         val data = Buffer.buffer(ar.result().encode())
                         response.putHeader("content-type", "application/json")
                                 .putHeader("content-length", data.length().toString())
                                 .write(data)
                                 .end()
                     } else {
-                        logger.error("Error get map sodiumMap key: $name")
+                        logger.error("Error get map ${Sodium.MAP_NAME} key: $name")
                         response.setStatusCode(404)
                                 .setStatusMessage("Error get value for: $name")
                                 .end()
                     }
                 }
             } else {
-                logger.error("Error getting AsyncMap: sodiumMap", it.cause())
+                logger.error("Error getting AsyncMap: ${Sodium.MAP_NAME}", it.cause())
                 response.setStatusCode(404)
                         .setStatusMessage("Error get value for: $name")
                         .end()
