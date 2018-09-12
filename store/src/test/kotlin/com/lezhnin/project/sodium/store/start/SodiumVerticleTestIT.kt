@@ -20,9 +20,10 @@ import io.vertx.kotlin.core.json.array
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
-object VertxTester : TestListener {
-
+object TestData {
     const val TEST = "test"
     const val TEST1 = "test1"
     const val TEST2 = "test2"
@@ -52,35 +53,38 @@ object VertxTester : TestListener {
                 )
         )
     }
+}
 
+object VertxTester : TestListener {
     private val vertx = Vertx.vertx()!!
     val logger = LoggerFactory.getLogger(VertxTester::class.java)!!
     val client = WebClient.create(vertx)!!
     private val sodiumVerticle = SodiumVerticle()
 
-    private fun waitForMap() {
-        (1..5).forEach {
-            val future = CompletableFuture<Int>()
+    private fun waitForMap(retries: Int = 5, minSize: Int = 1) {
+        (1..retries).forEach {
+            val mapSizeOkFuture = CompletableFuture<Void>()
             vertx.sharedData()
                     .getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) { map ->
                         if (map.succeeded()) {
                             map.result().size { size ->
                                 if (size.succeeded()) {
-                                    future.complete(size.result())
+                                    if (size.result() >= minSize) {
+                                        mapSizeOkFuture.complete(null)
+                                    }
                                 } else {
                                     logger.warn("Can't get size of ${Sodium.MAP_NAME}!", size.cause())
-                                    future.complete(0)
                                 }
                             }
                         } else {
                             logger.warn("Can't get ${Sodium.MAP_NAME}!", map.cause())
-                            future.complete(0)
                         }
                     }
-            if (future.get() > 0) {
-                return@forEach
+            try {
+                mapSizeOkFuture.get(1, TimeUnit.SECONDS)
+            } catch (te: TimeoutException) {
+                logger.warn("Timeout waiting for ${Sodium.MAP_NAME}, retry $it...")
             }
-            Thread.sleep(1000)
         }
     }
 
@@ -89,7 +93,7 @@ object VertxTester : TestListener {
     }
 
     override fun beforeSpec(description: Description, spec: Spec) {
-        val options = DeploymentOptions().setConfig(config)
+        val options = DeploymentOptions().setConfig(TestData.config)
         vertx.deployVerticle(sodiumVerticle, options)
         waitForMap()
     }
@@ -103,7 +107,7 @@ class SodiumVerticleTestIT : StringSpec() {
         "success" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${VertxTester.TEST}").send {
+            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.TEST}").send {
                 if (it.succeeded()) {
                     jsonFuture.complete(it.result().bodyAsJsonObject())
                 } else {
@@ -114,15 +118,15 @@ class SodiumVerticleTestIT : StringSpec() {
             whenReady(jsonFuture) {
                 VertxTester.logger.info(it)
 
-                it.getString(VertxTester.TEST1) shouldBe VertxTester.TEST1V
-                it.getString(VertxTester.TEST2) shouldBe VertxTester.TEST2V
+                it.getString(TestData.TEST1) shouldBe TestData.TEST1V
+                it.getString(TestData.TEST2) shouldBe TestData.TEST2V
             }
         }
 
         "failure" {
             val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${VertxTester.UNTEST}").send {
+            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
                 if (it.succeeded()) {
                     responseFuture.complete(it.result())
                 } else {
@@ -132,7 +136,7 @@ class SodiumVerticleTestIT : StringSpec() {
 
             whenReady(responseFuture) {
                 it.statusCode() shouldBe 404
-                it.statusMessage() shouldBe "Error get value for: ${VertxTester.UNTEST}"
+                it.statusMessage() shouldBe "Error get value for: ${TestData.UNTEST}"
             }
         }
     }
