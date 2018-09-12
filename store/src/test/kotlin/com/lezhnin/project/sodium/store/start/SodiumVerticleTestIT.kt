@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 object TestData {
-    const val TEST = "test"
+    const val TEST0 = "test0"
     const val TEST1 = "test1"
     const val TEST2 = "test2"
     const val TEST1V = "Test 1"
@@ -37,7 +37,7 @@ object TestData {
                         obj(
                                 Store.TYPE to Store.Type.JSON,
                                 Store.CONFIG to obj(
-                                        TEST to obj(
+                                        TEST0 to obj(
                                                 Store.STORES to array(
                                                         obj(
                                                                 Store.TYPE to Store.Type.JSON,
@@ -61,7 +61,7 @@ object VertxTester : TestListener {
     val client = WebClient.create(vertx)!!
     private val sodiumVerticle = SodiumVerticle()
 
-    private fun waitForMap(retries: Int = 5, minSize: Int = 1) {
+    fun waitForMap(vertx: Vertx, retries: Int = 5, minSize: Int = 1) {
         (1..retries).forEach {
             val mapSizeOkFuture = CompletableFuture<Void>()
             vertx.sharedData()
@@ -95,7 +95,7 @@ object VertxTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        waitForMap()
+        waitForMap(vertx)
     }
 }
 
@@ -107,7 +107,7 @@ class SodiumVerticleTestIT : StringSpec() {
         "success" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.TEST}").send {
+            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.TEST0}").send {
                 if (it.succeeded()) {
                     jsonFuture.complete(it.result().bodyAsJsonObject())
                 } else {
