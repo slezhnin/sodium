@@ -19,9 +19,14 @@ import io.vertx.ext.web.client.WebClient
 import io.vertx.kotlin.core.json.array
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
+import org.awaitility.Awaitility
+import org.awaitility.Duration
+import org.awaitility.Duration.ONE_SECOND
+import org.awaitility.kotlin.atMost
+import org.awaitility.kotlin.until
+import org.awaitility.kotlin.withPollInterval
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
+import java.util.concurrent.TimeUnit.SECONDS
 
 object TestData {
     const val TEST0 = "test0"
@@ -61,30 +66,28 @@ object VertxTester : TestListener {
     val client = WebClient.create(vertx)!!
     private val sodiumVerticle = SodiumVerticle()
 
-    fun waitForMap(vertx: Vertx, retries: Int = 5, minSize: Int = 1) {
-        (1..retries).forEach {
-            val mapSizeOkFuture = CompletableFuture<Void>()
+    fun waitForAsyncMap(vertx: Vertx, mapName: String, retries: Int = 5, minSize: Int = 1) {
+        Awaitility.with().conditionEvaluationListener {
+            logger.warn("Waiting for $mapName for ${it.elapsedTimeInMS}ms...")
+        } atMost Duration(retries.toLong(), SECONDS) withPollInterval ONE_SECOND until {
+            val mapSizeFuture = CompletableFuture<Int>()
             vertx.sharedData()
-                    .getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) { map ->
+                    .getAsyncMap<String, JsonObject>(mapName) { map ->
                         if (map.succeeded()) {
                             map.result().size { size ->
                                 if (size.succeeded()) {
-                                    if (size.result() >= minSize) {
-                                        mapSizeOkFuture.complete(null)
-                                    }
+                                    mapSizeFuture.complete(size.result())
                                 } else {
-                                    logger.warn("Can't get size of ${Sodium.MAP_NAME}!", size.cause())
+                                    logger.warn("Can't get size of $mapName!", size.cause())
+                                    mapSizeFuture.complete(0)
                                 }
                             }
                         } else {
-                            logger.warn("Can't get ${Sodium.MAP_NAME}!", map.cause())
+                            logger.warn("Can't get $mapName!", map.cause())
+                            mapSizeFuture.complete(0)
                         }
                     }
-            try {
-                mapSizeOkFuture.get(1, TimeUnit.SECONDS)
-            } catch (te: TimeoutException) {
-                logger.warn("Timeout waiting for ${Sodium.MAP_NAME}, retry $it...")
-            }
+            mapSizeFuture.get() >= minSize
         }
     }
 
@@ -95,7 +98,7 @@ object VertxTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        waitForMap(vertx)
+        waitForAsyncMap(vertx, Sodium.MAP_NAME)
     }
 }
 

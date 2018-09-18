@@ -1,5 +1,6 @@
 package com.lezhnin.project.sodium.store.start
 
+import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Store
 import com.lezhnin.project.sodium.store.Web
 import io.kotlintest.Description
@@ -51,7 +52,7 @@ object VertxGitTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestGitData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        VertxTester.waitForMap(vertx, 10, 2)
+        VertxTester.waitForAsyncMap(vertx, Sodium.MAP_NAME, 10, 2)
     }
 }
 
