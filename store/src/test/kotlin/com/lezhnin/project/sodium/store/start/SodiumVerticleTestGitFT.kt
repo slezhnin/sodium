@@ -29,7 +29,7 @@ object TestGitData {
                                 Store.CONFIG to obj(
                                         "url" to "https://github.com/slezhnin/sodium.git",
                                         "branch" to "test-master-config",
-                                        "path" to "test-master-config",
+                                        "path" to "target/test-master-config",
                                         "filesets" to array(
                                                 obj("pattern" to "*.json")
                                         )
