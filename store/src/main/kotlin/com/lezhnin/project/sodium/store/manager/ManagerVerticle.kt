@@ -34,11 +34,12 @@ class ManagerVerticle : AbstractVerticle() {
                 it.result().get(name) { ar ->
                     if (ar.succeeded() && ar.result() != null) {
                         logger.debug("Success get map ${Sodium.MAP_NAME} key: $name")
-                        val data = Buffer.buffer(ar.result().encode())
-                        response.putHeader("content-type", "application/json")
-                                .putHeader("content-length", data.length().toString())
-                                .write(data)
-                                .end()
+                        ar.result().toBuffer().apply {
+                            response.putHeader("content-type", "application/json")
+                                    .putHeader("content-length", length().toString())
+                                    .write(this)
+                                    .end()
+                        }
                     } else {
                         logger.error("Error get map ${Sodium.MAP_NAME} key: $name")
                         response.setStatusCode(404)
