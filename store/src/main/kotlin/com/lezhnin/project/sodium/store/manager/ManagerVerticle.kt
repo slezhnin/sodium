@@ -3,7 +3,6 @@ package com.lezhnin.project.sodium.store.manager
 import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Web
 import io.vertx.core.AbstractVerticle
-import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.LoggerFactory
@@ -25,7 +24,7 @@ class ManagerVerticle : AbstractVerticle() {
                     )
                 }
 
-        getVertx().createHttpServer().requestHandler { router.accept(it) }.listen(8080)
+        getVertx().createHttpServer().requestHandler { router.accept(it) }.listen(config().getInteger(Web.PORT, 8080))
     }
 
     private fun sendData(name: String, response: HttpServerResponse) {
