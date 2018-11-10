@@ -27,6 +27,7 @@ import org.awaitility.kotlin.until
 import org.awaitility.kotlin.withPollInterval
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit.SECONDS
+import kotlin.test.asserter
 
 object TestData {
     const val TEST0 = "test0"

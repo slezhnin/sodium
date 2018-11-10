@@ -56,7 +56,7 @@ object VertxGitTester : TestListener {
     }
 }
 
-class SodiumVerticleTestGitFT : StringSpec() {
+class SodiumVerticleGitTestFT : StringSpec() {
 
     override fun listeners(): List<TestListener> = listOf(VertxGitTester)
 
