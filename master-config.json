@@ -17,7 +17,7 @@
         "config": {
           "url": "https://github.com/slezhnin/sodium.git",
           "branch": "test-dictionary1",
-          "path": "target/test-dictionary1",
+          "path": "build/test-dictionary1",
           "filesets": [
             {
               "pattern": "*.json"
