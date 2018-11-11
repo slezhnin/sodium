@@ -30,7 +30,6 @@ import org.awaitility.kotlin.until
 import org.awaitility.kotlin.withPollInterval
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit.SECONDS
-import kotlin.test.asserter
 
 object TestData {
     const val TEST0 = "test0"
@@ -43,25 +42,25 @@ object TestData {
 
     val config = json {
         obj(
-                PORT to TEST_PORT,
-                STORES to array(
-                        obj(
-                                Store.TYPE to Store.Type.JSON,
-                                Store.CONFIG to obj(
-                                        TEST0 to obj(
-                                                STORES to array(
-                                                        obj(
-                                                                Store.TYPE to Store.Type.JSON,
-                                                                Store.CONFIG to obj(
-                                                                        TEST1 to TEST1V,
-                                                                        TEST2 to TEST2V
-                                                                )
-                                                        )
-                                                )
-                                        )
+            PORT to TEST_PORT,
+            STORES to array(
+                obj(
+                    Store.TYPE to Store.Type.JSON,
+                    Store.CONFIG to obj(
+                        TEST0 to obj(
+                            STORES to array(
+                                obj(
+                                    Store.TYPE to Store.Type.JSON,
+                                    Store.CONFIG to obj(
+                                        TEST1 to TEST1V,
+                                        TEST2 to TEST2V
+                                    )
                                 )
+                            )
                         )
+                    )
                 )
+            )
         )
     }
 }
@@ -78,21 +77,21 @@ object VertxTester : TestListener {
         } atMost Duration(retries.toLong(), SECONDS) withPollInterval ONE_SECOND until {
             val mapSizeFuture = CompletableFuture<Int>()
             vertx.sharedData()
-                    .getAsyncMap<String, JsonObject>(mapName) { map ->
-                        if (map.succeeded()) {
-                            map.result().size { size ->
-                                if (size.succeeded()) {
-                                    mapSizeFuture.complete(size.result())
-                                } else {
-                                    logger.warn("Can't get size of $mapName!", size.cause())
-                                    mapSizeFuture.complete(0)
-                                }
+                .getAsyncMap<String, JsonObject>(mapName) { map ->
+                    if (map.succeeded()) {
+                        map.result().size { size ->
+                            if (size.succeeded()) {
+                                mapSizeFuture.complete(size.result())
+                            } else {
+                                logger.warn("Can't get size of $mapName!", size.cause())
+                                mapSizeFuture.complete(0)
                             }
-                        } else {
-                            logger.warn("Can't get $mapName!", map.cause())
-                            mapSizeFuture.complete(0)
                         }
+                    } else {
+                        logger.warn("Can't get $mapName!", map.cause())
+                        mapSizeFuture.complete(0)
                     }
+                }
             mapSizeFuture.get() >= minSize
         }
     }

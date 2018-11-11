@@ -1,7 +1,11 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.0"
+    id("com.github.johnrengelman.shadow") version "4.0.2"
+    distribution
 }
 
 allprojects {
@@ -23,6 +27,8 @@ allprojects {
 
 subprojects {
     apply(plugin = "kotlin")
+    apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "distribution")
 
     dependencies {
         compile(kotlin("stdlib-jdk8"))
@@ -46,15 +52,26 @@ project("sodium-store") {
         compile(group = "io.vertx", name = "vertx-web-client", version = vertxVersion)
     }
 
-    tasks.create<Jar>("fatJar") {
-        baseName = "${project.name}-fat"
+    tasks.withType<ShadowJar> {
+        mergeServiceFiles {
+            include(
+                "META-INF/services/io.vertex.config.spi.*",
+                "META-INF/services/io.vertex.core.spi.*"
+            )
+        }
+    }
+
+    tasks.withType<Jar> {
         manifest {
             attributes["Main-Class"] = "io.vertx.core.Launcher"
-            attributes["Main-Verticle"] = "SodiumVerticle"
+            attributes["Main-Verticle"] = "com.lezhnin.project.sodium.store.start.SodiumVerticle"
+            attributes["Class-Path"] = configurations.compile.joinToString(" ") { "libs/" + it.name }
         }
-        from(configurations.compileClasspath.map {
-            if (it.isDirectory) fileTree(it) else zipTree(it)
-        })
-        with(rootProject.tasks["jar"] as CopySpec)
+    }
+
+    distributions {
+        getByName("main") {
+            baseName = project.name
+        }
     }
 }

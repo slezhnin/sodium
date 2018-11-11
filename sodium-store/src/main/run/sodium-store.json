@@ -1,0 +1,18 @@
+{
+  "http.port": 8080,
+  "stores": [
+    {
+      "type": "git",
+      "config": {
+        "url": "https://github.com/slezhnin/sodium.git",
+        "branch": "test-master-config",
+        "path": "test-master-config",
+        "filesets": [
+          {
+            "pattern": "*.json"
+          }
+        ]
+      }
+    }
+  ]
+}

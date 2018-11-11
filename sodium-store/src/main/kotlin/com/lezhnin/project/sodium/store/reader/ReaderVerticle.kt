@@ -22,6 +22,7 @@ class ReaderVerticle : AbstractVerticle() {
                 includeDefaultStores = true,
                 scanPeriod = 10000
         )
+        logger.debug("config(): {}", config().encodePrettily())
         val retriever = ConfigRetriever.create(getVertx(), options)
 
         retriever.getConfig(this::gotConfig)
