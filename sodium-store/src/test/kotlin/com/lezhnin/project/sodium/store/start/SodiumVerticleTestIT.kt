@@ -2,7 +2,10 @@ package com.lezhnin.project.sodium.store.start
 
 import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Store
+import com.lezhnin.project.sodium.store.Store.STORES
 import com.lezhnin.project.sodium.store.Web
+import com.lezhnin.project.sodium.store.Web.PORT
+import com.lezhnin.project.sodium.store.start.TestData.TEST_PORT
 import io.kotlintest.Description
 import io.kotlintest.Spec
 import io.kotlintest.extensions.TestListener
@@ -36,15 +39,17 @@ object TestData {
     const val TEST1V = "Test 1"
     const val TEST2V = "Test 2"
     const val UNTEST = "untest"
+    const val TEST_PORT = 8081
 
     val config = json {
         obj(
-                Store.STORES to array(
+                PORT to TEST_PORT,
+                STORES to array(
                         obj(
                                 Store.TYPE to Store.Type.JSON,
                                 Store.CONFIG to obj(
                                         TEST0 to obj(
-                                                Store.STORES to array(
+                                                STORES to array(
                                                         obj(
                                                                 Store.TYPE to Store.Type.JSON,
                                                                 Store.CONFIG to obj(
@@ -111,7 +116,7 @@ class SodiumVerticleTestIT : StringSpec() {
         "success" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.TEST0}").send {
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}").send {
                 if (it.succeeded()) {
                     jsonFuture.complete(it.result().bodyAsJsonObject())
                 } else {
@@ -130,7 +135,7 @@ class SodiumVerticleTestIT : StringSpec() {
         "failure" {
             val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
                 if (it.succeeded()) {
                     responseFuture.complete(it.result())
                 } else {

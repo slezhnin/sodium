@@ -3,6 +3,8 @@ package com.lezhnin.project.sodium.store.start
 import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Store
 import com.lezhnin.project.sodium.store.Web
+import com.lezhnin.project.sodium.store.Web.PORT
+import com.lezhnin.project.sodium.store.start.TestGitData.TEST_PORT
 import io.kotlintest.Description
 import io.kotlintest.Spec
 import io.kotlintest.extensions.TestListener
@@ -21,21 +23,23 @@ import io.vertx.kotlin.core.json.obj
 import java.util.concurrent.CompletableFuture
 
 object TestGitData {
+    const val TEST_PORT = 8082
     val config = json {
         obj(
-                Store.STORES to array(
-                        obj(
-                                Store.TYPE to Store.Type.GIT,
-                                Store.CONFIG to obj(
-                                        "url" to "https://github.com/slezhnin/sodium.git",
-                                        "branch" to "test-master-config",
-                                        "path" to "target/test-master-config",
-                                        "filesets" to array(
-                                                obj("pattern" to "*.json")
-                                        )
-                                )
+            PORT to TEST_PORT,
+            Store.STORES to array(
+                obj(
+                    Store.TYPE to Store.Type.GIT,
+                    Store.CONFIG to obj(
+                        "url" to "https://github.com/slezhnin/sodium.git",
+                        "branch" to "test-master-config",
+                        "path" to "build/test-master-config",
+                        "filesets" to array(
+                            obj("pattern" to "*.json")
                         )
+                    )
                 )
+            )
         )
     }
 }
@@ -64,7 +68,7 @@ class SodiumVerticleGitTestFT : StringSpec() {
         "success for dictionary 0" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
-            VertxGitTester.client.get(8080, "localhost", "${Web.PATH}TEST0").send {
+            VertxGitTester.client.get(TEST_PORT, "localhost", "${Web.PATH}TEST0").send {
                 if (it.succeeded()) {
                     jsonFuture.complete(it.result().bodyAsJsonObject())
                 } else {
@@ -83,7 +87,7 @@ class SodiumVerticleGitTestFT : StringSpec() {
         "success for dictionary 1" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
-            VertxGitTester.client.get(8080, "localhost", "${Web.PATH}TEST1").send {
+            VertxGitTester.client.get(TEST_PORT, "localhost", "${Web.PATH}TEST1").send {
                 if (it.succeeded()) {
                     jsonFuture.complete(it.result().bodyAsJsonObject())
                 } else {
@@ -102,7 +106,7 @@ class SodiumVerticleGitTestFT : StringSpec() {
         "failure" {
             val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
 
-            VertxTester.client.get(8080, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
                 if (it.succeeded()) {
                     responseFuture.complete(it.result())
                 } else {
