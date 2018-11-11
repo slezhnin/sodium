@@ -34,15 +34,6 @@ subprojects {
     }
 }
 
-tasks.create<Jar>("fatJar") {
-    description = "Creating Fat Jar"
-    baseName = "${project.name}-fat"
-    from(configurations.compileClasspath.map {
-        if (it.isDirectory) fileTree(it) else zipTree(it)
-    })
-    with(tasks["jar"] as CopySpec)
-}
-
 project("sodium-store") {
     val vertxVersion = "3.5.3"
 
@@ -61,6 +52,9 @@ project("sodium-store") {
             attributes["Main-Class"] = "io.vertx.core.Launcher"
             attributes["Main-Verticle"] = "SodiumVerticle"
         }
-        with(rootProject.tasks["fatJar"] as CopySpec)
+        from(configurations.compileClasspath.map {
+            if (it.isDirectory) fileTree(it) else zipTree(it)
+        })
+        with(rootProject.tasks["jar"] as CopySpec)
     }
 }
