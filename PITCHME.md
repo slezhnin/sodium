@@ -1,9 +1,9 @@
-## Быстрый доступ к медленным данным​
+## @[thumbs-up] Быстрый доступ к медленным данным​
 
 Или как заставить ленивых  котиков  быстро бегать​
 
 ---
-## Тезисы​
+## @fa[compass] Тезисы​
 
 @ul
 
@@ -15,12 +15,12 @@
 @ulend
 
 ---
-## JSON, HOCON, YAML?​
+## @fa[file] JSON, HOCON, YAML?​
 
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=JSON Configuration File
 
 ---
-## Мёрдж, комит, бранч, ревёрт?​
+## @fa[meh-rolling-eyes] Мёрдж, комит, бранч, ревёрт?​
 
 @ul
 
@@ -33,7 +33,7 @@
 @ulend
 
 ---
-## Git – это мягкий и пушистый котик​
+## @fa[code-branch] Git – это мягкий и пушистый котик​
 
 @ul
 
