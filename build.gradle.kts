@@ -1,11 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.0"
     id("com.github.johnrengelman.shadow") version "4.0.2"
-    distribution
+    application
 }
 
 allprojects {
@@ -28,7 +27,7 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "com.github.johnrengelman.shadow")
-    apply(plugin = "distribution")
+    apply(plugin = "application")
 
     dependencies {
         compile(kotlin("stdlib-jdk8"))
@@ -55,8 +54,7 @@ project("sodium-store") {
     tasks.withType<ShadowJar> {
         mergeServiceFiles {
             include(
-                "META-INF/services/io.vertex.config.spi.*",
-                "META-INF/services/io.vertex.core.spi.*"
+                "META-INF/services/io.vertex.config.spi.ConfigStoreFactory"
             )
         }
     }
@@ -65,13 +63,21 @@ project("sodium-store") {
         manifest {
             attributes["Main-Class"] = "io.vertx.core.Launcher"
             attributes["Main-Verticle"] = "com.lezhnin.project.sodium.store.start.SodiumVerticle"
-            attributes["Class-Path"] = configurations.compile.joinToString(" ") { "libs/" + it.name }
+            attributes["Class-Path"] = configurations.compile.joinToString(" ") { "lib/" + it.name }
         }
     }
 
-    distributions {
-        getByName("main") {
-            baseName = project.name
-        }
+    tasks.create<Copy>("dist") {
+        dependsOn("jar")
+        from(tasks["jar"])
+        from(configurations.runtime)
+        into("${project.buildDir}/dist/lib")
+    }
+
+    application {
+        mainClassName = "io.vertx.core.Launcher"
+        applicationDefaultJvmArgs = listOf(
+            "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory"
+        )
     }
 }

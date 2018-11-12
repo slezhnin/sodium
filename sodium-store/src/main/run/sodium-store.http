@@ -1,0 +1,11 @@
+GET http://localhost:8080/dictionary/TEST0
+
+###
+
+GET http://localhost:8080/dictionary/TEST1
+
+###
+
+GET http://localhost:8080/dictionary/TEST2
+
+###
