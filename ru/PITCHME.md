@@ -17,10 +17,21 @@
 ---
 ## @fa[file] JSON, HOCON, YAML?​
 
+@ul
+
+- Какой формат выбрать для хранения?
+- Да какой вам удобно.
+
+<br>
+
+- Но мы будем испольовать JSON.
+
+@ulenf
+
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=JSON Configuration File
 
 ---
-## @fa[question] Мёрдж, комит, бранч, ревёрт?​
+## @fa[question] Мёрдж, комит, бранч, ревёрт
 
 @ul
 
@@ -48,3 +59,8 @@
 - Мы будем использовать его для хранения данных​
 
 @ulend
+
+---
+### Общая схема
+
+![General Schema](ru/general_schema.png)
