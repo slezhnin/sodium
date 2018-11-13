@@ -40,6 +40,7 @@
 <br>
 
 - Это Git, сэр!​
+- QR CODE для репозитория @fa[long-arrow-right]
 
 @ulend
 
