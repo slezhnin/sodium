@@ -19,7 +19,7 @@ object Store {
 }
 
 object Web {
-    const val PATH = "/dictionary/"
+    const val PATH = "/data/"
     const val PARAMETER = "name"
     const val PORT = "http.port"
 }
