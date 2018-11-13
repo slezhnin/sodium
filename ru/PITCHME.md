@@ -28,7 +28,7 @@
 
 @ulenf
 
----?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=JSON Configuration File
+---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[fie-text] JSON Configuration File
 
 ---?image=assets/repo_qr_code.png&position=bottom 1px right 1px&size=479px 479px
 ## @fa[question] Мёрдж, комит, бранч, ревёрт
