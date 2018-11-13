@@ -63,4 +63,4 @@
 ---
 ### Общая схема
 
-![General Schema](ru/general_schema.png)
+![General Schema](assets/general_schema.png)
