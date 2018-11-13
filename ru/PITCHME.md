@@ -20,7 +20,7 @@
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=JSON Configuration File
 
 ---
-## @fa[meh-rolling-eyes] Мёрдж, комит, бранч, ревёрт?​
+## @fa[question] Мёрдж, комит, бранч, ревёрт?​
 
 @ul
 
@@ -33,7 +33,7 @@
 @ulend
 
 ---
-## @fa[code-branch] Git – это мягкий и пушистый котик​
+## @fa[code-fork] Git – это мягкий и пушистый котик​
 
 @ul
 
