@@ -15,6 +15,7 @@ class ReaderVerticle : AbstractVerticle() {
         private val logger = LoggerFactory.getLogger(ReaderVerticle::class.java)
     }
 
+    private var masterRetriever: ConfigRetriever? = null
     private val retrievers = mutableMapOf<String, ConfigRetriever>()
 
     override fun start() {
@@ -60,10 +61,11 @@ class ReaderVerticle : AbstractVerticle() {
     }
 
     private fun readConfig(json: JsonObject) {
-        val retriever = configRetriever(json)
+        masterRetriever?.close()
+        masterRetriever = configRetriever(json)
 
-        retriever.getConfig(this::gotMasterConfig)
-        retriever.listen(this::masterConfigChanged)
+        masterRetriever?.getConfig(this::gotMasterConfig)
+        masterRetriever?.listen(this::masterConfigChanged)
     }
 
     private fun masterConfigChanged(change: ConfigChange) {
@@ -73,13 +75,16 @@ class ReaderVerticle : AbstractVerticle() {
 
     private fun gotMasterConfig(config: AsyncResult<JsonObject>) {
         if (config.succeeded()) {
-            readMasterConfig(config.result())
+            reloadMasterConfig(config.result())
         } else {
             logger.error("Error reading master config!", config.cause())
         }
     }
 
-    private fun readMasterConfig(json: JsonObject) {
+    private fun reloadMasterConfig(json: JsonObject) {
+        retrievers.forEach { _, retriever -> retriever.close()  }
+        retrievers.clear()
+
         json.fieldNames().forEach { name ->
             val retriever = configRetriever(json.getJsonObject(name))
             val readHandler = ReadHandler(getVertx(), name)
