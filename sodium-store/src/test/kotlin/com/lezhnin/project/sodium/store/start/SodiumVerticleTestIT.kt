@@ -103,7 +103,7 @@ object VertxTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        waitForAsyncMap(vertx, Sodium.MAP_NAME)
+        waitForAsyncMap(vertx, Sodium.DEFAULT_MAP_NAME)
     }
 }
 

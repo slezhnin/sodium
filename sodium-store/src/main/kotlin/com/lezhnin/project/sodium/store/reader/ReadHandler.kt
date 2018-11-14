@@ -18,17 +18,17 @@ class ReadHandler(private val vertx: Vertx, private val name: String) : Handler<
 
     fun read(json: JsonObject?) {
         vertx.sharedData()
-                .getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) {
+                .getAsyncMap<String, JsonObject>(Sodium.DEFAULT_MAP_NAME) {
                     if (it.succeeded()) {
                         it.result().put(name, json) { result ->
                             if (result.succeeded()) {
-                                logger.debug("Success put into map ${Sodium.MAP_NAME} key: $name")
+                                logger.debug("Success put into map ${Sodium.DEFAULT_MAP_NAME} key: $name")
                             } else {
-                                logger.error("Error put into map ${Sodium.MAP_NAME} key: $name")
+                                logger.error("Error put into map ${Sodium.DEFAULT_MAP_NAME} key: $name")
                             }
                         }
                     } else {
-                        logger.error("Error getting AsyncMap: ${Sodium.MAP_NAME}", it.cause())
+                        logger.error("Error getting AsyncMap: ${Sodium.DEFAULT_MAP_NAME}", it.cause())
                     }
                 }
     }

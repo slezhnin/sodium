@@ -1,7 +1,8 @@
 package com.lezhnin.project.sodium.store
 
 object Sodium {
-    const val MAP_NAME = "sodiumMap"
+    const val MAP_NAME = "sodium.map"
+    const val DEFAULT_MAP_NAME = "sodiumMap"
 }
 
 object Store {
