@@ -82,3 +82,6 @@
 ![General Schema](assets/general_schema.png)
 
 ---?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/manager/ManagerVerticle.kt&lang=kotlin&title=Manager Verticle
+
+@[9-21](Инициализация маршрутизации)
+@[23-29](Инициализация HTTP сервера)
