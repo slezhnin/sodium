@@ -62,11 +62,6 @@
 @ulend
 
 ---
-## Общая схема
-
-![General Schema](assets/general_schema.png)
-
----
 ## Пара слов об Eclipse Vert.x
 
 @ul
@@ -80,3 +75,10 @@
 - Подробнее на сайте [vertx.io](https://vertx.io/)
 
 @ulend
+
+---
+## Общая схема
+
+![General Schema](assets/general_schema.png)
+
+---?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/manager/ManagerVerticle.kt&lang=kotlin&title=Manager Verticle
