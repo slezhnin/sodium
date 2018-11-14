@@ -103,7 +103,7 @@ object VertxTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        waitForAsyncMap(vertx, Sodium.MAP_NAME)
+        waitForAsyncMap(vertx, Sodium.DEFAULT_MAP_NAME)
     }
 }
 
@@ -117,7 +117,11 @@ class SodiumVerticleTestIT : StringSpec() {
 
             VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}").send {
                 if (it.succeeded()) {
-                    jsonFuture.complete(it.result().bodyAsJsonObject())
+                    try {
+                        jsonFuture.complete(it.result().bodyAsJsonObject())
+                    } catch (e: Exception) {
+                        jsonFuture.completeExceptionally(e)
+                    }
                 } else {
                     jsonFuture.completeExceptionally(it.cause())
                 }

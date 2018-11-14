@@ -56,7 +56,7 @@ object VertxGitTester : TestListener {
     override fun beforeSpec(description: Description, spec: Spec) {
         val options = DeploymentOptions().setConfig(TestGitData.config)
         vertx.deployVerticle(sodiumVerticle, options)
-        VertxTester.waitForAsyncMap(vertx, Sodium.MAP_NAME, 10, 2)
+        VertxTester.waitForAsyncMap(vertx, Sodium.DEFAULT_MAP_NAME, 10, 2)
     }
 }
 
@@ -70,7 +70,11 @@ class SodiumVerticleGitTestFT : StringSpec() {
 
             VertxGitTester.client.get(TEST_PORT, "localhost", "${Web.PATH}TEST0").send {
                 if (it.succeeded()) {
-                    jsonFuture.complete(it.result().bodyAsJsonObject())
+                    try {
+                        jsonFuture.complete(it.result().bodyAsJsonObject())
+                    } catch (e: Exception) {
+                        jsonFuture.completeExceptionally(e)
+                    }
                 } else {
                     jsonFuture.completeExceptionally(it.cause())
                 }

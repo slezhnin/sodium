@@ -1,35 +1,37 @@
 package com.lezhnin.project.sodium.store.reader
 
-import com.lezhnin.project.sodium.store.Sodium
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
-import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
-import io.vertx.core.logging.LoggerFactory
+import io.vertx.core.logging.Logger
+import io.vertx.core.shareddata.SharedData
 
-class ReadHandler(private val vertx: Vertx, private val name: String) : Handler<AsyncResult<JsonObject>> {
-    companion object {
-        private val logger = LoggerFactory.getLogger(ReaderVerticle::class.java)
-    }
+class ReadHandler(
+    private val sharedData: SharedData,
+    private val mapName: String,
+    private val key: String,
+    private val logger: Logger
+) : Handler<AsyncResult<JsonObject>> {
 
     override fun handle(event: AsyncResult<JsonObject>?) {
-        read(event?.result())
+        event?.apply {
+            read(result())
+        }
     }
 
-    fun read(json: JsonObject?) {
-        vertx.sharedData()
-                .getAsyncMap<String, JsonObject>(Sodium.MAP_NAME) {
-                    if (it.succeeded()) {
-                        it.result().put(name, json) { result ->
-                            if (result.succeeded()) {
-                                logger.debug("Success put into map ${Sodium.MAP_NAME} key: $name")
-                            } else {
-                                logger.error("Error put into map ${Sodium.MAP_NAME} key: $name")
-                            }
-                        }
+    fun read(json: JsonObject) {
+        sharedData.getAsyncMap<String, JsonObject>(mapName) {
+            if (it.succeeded()) {
+                it.result().put(key, json) { result ->
+                    if (result.succeeded()) {
+                        logger.debug("Success put into map $mapName key: $key")
                     } else {
-                        logger.error("Error getting AsyncMap: ${Sodium.MAP_NAME}", it.cause())
+                        logger.error("Error put into map $mapName key: $key")
                     }
                 }
+            } else {
+                logger.error("Error getting AsyncMap: $mapName", it.cause())
+            }
+        }
     }
 }
