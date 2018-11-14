@@ -70,7 +70,11 @@ class SodiumVerticleGitTestFT : StringSpec() {
 
             VertxGitTester.client.get(TEST_PORT, "localhost", "${Web.PATH}TEST0").send {
                 if (it.succeeded()) {
-                    jsonFuture.complete(it.result().bodyAsJsonObject())
+                    try {
+                        jsonFuture.complete(it.result().bodyAsJsonObject())
+                    } catch (e: Exception) {
+                        jsonFuture.completeExceptionally(e)
+                    }
                 } else {
                     jsonFuture.completeExceptionally(it.cause())
                 }

@@ -13,7 +13,7 @@ class ManagerVerticle : AbstractVerticle() {
             .handler(ManagerDataRequestHandler())
 
         getVertx().createHttpServer().requestHandler {
-            Router.router(getVertx()).accept(it)
+            router.accept(it)
         }.listen(
             config().getInteger(Web.PORT, 8080)
         )
