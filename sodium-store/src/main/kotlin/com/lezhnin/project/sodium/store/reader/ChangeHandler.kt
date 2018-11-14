@@ -5,6 +5,8 @@ import io.vertx.core.Handler
 
 class ChangeHandler(private val readHandler: ReadHandler) : Handler<ConfigChange> {
     override fun handle(event: ConfigChange?) {
-        readHandler.read(event?.newConfiguration)
+        event?.apply {
+            readHandler.read(newConfiguration)
+        }
     }
 }
