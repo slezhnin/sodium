@@ -12,10 +12,6 @@
 
 @ulend
 
-@snap[east]
-![Profile Photo](assets/profile_photo.jpg)
-@snapend
-
 ---
 ## @fa[compass] Тезисы​
 
