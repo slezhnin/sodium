@@ -2,6 +2,13 @@
 
 Или как заставить ленивых  котиков  быстро бегать​
 
+---?image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=543px 408px
+## @fa[briefcase] О докладчике
+
+### Сергей Лежнин
+### Разработчик в Сбербанк Технологии
+### [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
+
 ---
 ## @fa[compass] Тезисы​
 
@@ -103,3 +110,36 @@
 @[25-30](Не получили AsyncMap)
 @[35-42](Завершение запроса с возвратом значения)
 @[44-48](Завершение запроса с ошибкой)
+
+---?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ReaderVerticle.kt&lang=kotlin&title=Reader Verticle
+
+@[10-20](Инициализация конфигурации)
+@[22-28](Обработчик получения начальной конфигурации)
+@[22-28](Обработчик обновления начальной конфигурации)
+
++++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/MasterConfig.kt&lang=kotlin&title=Master Config
+
+@[12-19](Параметры и поля)
+@[21-36](Основной конструктор)
+@[24-30](Обработчик получения главной конфигурации)
+@[31-34](Обработчик обновления главной конфигурации)
+@[38-41](Метод остановки обработчиков главной конфигурации)
+@[43-60](Метод перезагрузки главной конфигурации)
+@[43-60](Метод перезагрузки главной конфигурации)
+@[44-45](Очистка загрузчиков)
+@[48-58](Инициализация загрузчика)
+@[62-77](Метод конфигурирования ConfigRetriever)
+
++++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ReadHandler.kt&lang=kotlin&title=Read Handler
+
+@[9-20](Параметры, поля и обработка данных)
+@[21-36](Запись данных в AsyncMap)
+
++++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ChangeHandler.kt&lang=kotlin&title=Change Handler
+
+---
+## @fa[spinner fa-pulse fa-3x fa-fw] Живая демострация котиков
+
+---
+## @fa[check-square-o] Конец презентации
+### @fa[thumbs-o-up] Спасибо за внимание!
