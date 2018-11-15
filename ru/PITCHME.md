@@ -44,6 +44,9 @@
 <br>
 
 - QR CODE для репозитория @fa[long-arrow-right]
+
+<br>
+
 - https://github.com/slezhnin/sodium
 
 @ulend
