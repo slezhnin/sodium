@@ -4,7 +4,9 @@
 
 ---
 ## @fa[briefcase] О докладчике
+@transition[none]
 
+@snap[west]
 @ul
 
 - Сергей Лежнин
@@ -12,8 +14,11 @@
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
 
 @ulend
+@snapend
 
+@snap[east]
 ![Profile Photo](assets/profile_photo.jpg)
+@snapend
 
 ---
 ## @fa[compass] Тезисы​
