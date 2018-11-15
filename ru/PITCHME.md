@@ -14,6 +14,10 @@
 @ulend
 @snapend
 
+@snap[midpoint]
+fa[code fa-3x]
+@snapend
+
 @snap[east]
 ![Profile Photo](assets/profile_photo.jpg)
 @snapend
