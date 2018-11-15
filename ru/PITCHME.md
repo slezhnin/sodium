@@ -15,7 +15,7 @@
 @snapend
 
 @snap[midpoint]
-fa[code fa-3x]
+</>
 @snapend
 
 @snap[east]
