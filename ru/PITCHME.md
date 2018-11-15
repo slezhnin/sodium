@@ -2,7 +2,7 @@
 
 Или как заставить ленивых  котиков  быстро бегать​
 
----image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=434px 326px
+---?image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=434px 326px
 ### @fa[briefcase] О докладчике
 @ul
 
