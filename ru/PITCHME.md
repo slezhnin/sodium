@@ -5,9 +5,13 @@
 ---?image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=543px 408px
 ## @fa[briefcase] О докладчике
 
-### Сергей Лежнин
-### Разработчик в Сбербанк Технологии
-### [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
+@ul
+
+- Сергей Лежнин
+- Разработчик в Сбербанк Технологии
+- [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
+
+@ulend
 
 ---
 ## @fa[compass] Тезисы​
@@ -138,7 +142,7 @@
 +++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ChangeHandler.kt&lang=kotlin&title=Change Handler
 
 ---
-## @fa[spinner fa-pulse fa-3x fa-fw] Живая демострация котиков
+## @fa[spinner fa-pulse fa-fw] Живая демострация котиков
 
 ---
 ## @fa[check-square-o] Конец презентации
