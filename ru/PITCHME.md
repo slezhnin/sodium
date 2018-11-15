@@ -30,7 +30,7 @@
 
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
----?image=assets/logo_qr.png&position=bottom 2px right 2px&size=316px 316px
+---?image=assets/logo_qr.png&position=bottom 20px right 2px&size=316px 316px
 ## @fa[question] Мёрдж, комит, бранч, ревёрт
 
 @ul
@@ -44,6 +44,7 @@
 <br>
 
 - QR CODE для репозитория @fa[long-arrow-right]
+- https://github.com/slezhnin/sodium
 
 @ulend
 
