@@ -1,2 +1,5 @@
 code-line-numbers : true
 highlight : tomorrow-night
+controls-layout : edges
+logo : assets/logo_qr.png
+logo-position : top-right

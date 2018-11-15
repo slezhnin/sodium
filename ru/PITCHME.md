@@ -30,7 +30,7 @@
 
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
----?image=assets/repo_qr_code.png&position=bottom 1px right 1px&size=633px 633px
+---?image=assets/repo_qr_code.png&position=bottom 1px right 1px&size=475px 475px
 ## @fa[question] Мёрдж, комит, бранч, ревёрт
 
 @ul
