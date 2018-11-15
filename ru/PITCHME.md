@@ -3,16 +3,14 @@
 Или как заставить ленивых  котиков  быстро бегать​
 
 ---
-## @fa[briefcase] О докладчике
 @transition[none]
 
 @snap[west]
+### @fa[briefcase] О докладчике
 @ul
-
 - Сергей Лежнин
 - Разработчик в Сбербанк Технологии
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
-
 @ulend
 @snapend
 
