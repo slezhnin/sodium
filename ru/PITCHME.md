@@ -10,9 +10,10 @@
 - Сергей Лежнин
 - Разработчик в Сбербанк Технологии
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
-- ![Profile Photo](assets/profile_photo.jpg)
 
 @ulend
+
+![Profile Photo](assets/profile_photo.jpg)
 
 ---
 ## @fa[compass] Тезисы​
