@@ -2,21 +2,15 @@
 
 Или как заставить ленивых  котиков  быстро бегать​
 
----
-@transition[none]
-
-@snap[west]
+---image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=434px 326px
 ### @fa[briefcase] О докладчике
 @ul
+
 - Сергей Лежнин
 - Разработчик в Сбербанк Технологии
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
-@ulend
-@snapend
 
-@snap[midpoint]
-</>
-@snapend
+@ulend
 
 @snap[east]
 ![Profile Photo](assets/profile_photo.jpg)
