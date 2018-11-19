@@ -2,12 +2,13 @@
 
 Или как заставить ленивых  котиков  быстро бегать​
 
+![Profile Photo](assets/profile_photo.jpg)
+
 @ul
 
 - Сергей Лежнин
 - Сбербанк Технологии
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
-- ![Profile Photo](assets/profile_photo.jpg)
 
 @ulend
 
