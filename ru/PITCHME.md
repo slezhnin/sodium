@@ -51,26 +51,30 @@
 
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
----?image=assets/logo_qr.png&position=bottom 49px right 9px&size=299px 299px
-### @fa[question] Мёрдж, комит, бранч, ревёрт
+---?image=?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
+@transition[none]
 
+@snap[north]
+@quote(@fa[question] Мёрдж, комит, бранч, ревёрт)
+@ulend
+
+@snap[west]
 @ul
 
 - Что это, Бэрримор?​
-
-<br>
-
 - Это Git, сэр!​
 
 <br>
 
 - QR CODE для репозитория @fa[long-arrow-right]
-
-<br>
-
 - https://github.com/slezhnin/sodium
 
 @ulend
+@snapend
+
+@snap[east]
+![QR](assets/logo_qr.png)
+@snapend
 
 ---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### @fa[code-fork] Git – это мягкий и пушистый котик​
