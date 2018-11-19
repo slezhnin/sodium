@@ -51,12 +51,12 @@
 
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
----?image=?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 @transition[none]
 
 @snap[north]
 ### @fa[question] Мёрдж, комит, бранч, ревёрт)
-@ulend
+@snapend
 
 @snap[west]
 @quote[Что это, Бэрримор?](​Это Git, сэр!)​
