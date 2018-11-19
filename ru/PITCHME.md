@@ -1,3 +1,4 @@
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 @transition[none]
 
 @snap[north]
