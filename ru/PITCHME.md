@@ -4,7 +4,7 @@
 @box[bg-green text-white waved](@fa[space-shuttle] Быстрый доступ к медленным данным​#Или как заставить ленивых  котиков  быстро бегать​)
 @snapend
 
-@snap[south-east]
+@snap[east]
 ![Profile Photo](assets/profile_photo_2.jpg)
 @snapend
 
@@ -19,7 +19,7 @@
 @snapend
 
 @snap[south]
-[Vert.x](https://vertx.io)  [Kotlin](https://kotlinlang.org)
+[Vert.x](https://vertx.io) @fa[chevron-left] [Kotlin](https://kotlinlang.org)
 @snapend
 
 ---
