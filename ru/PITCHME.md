@@ -6,11 +6,11 @@
 Или как заставить ленивых  котиков  быстро бегать​
 @snapend
 
-@snap[east]
+@snap[south-east]
 ![Profile Photo](assets/profile_photo_2.jpg)
 @snapend
 
-@snap[west]
+@snap[south-west]
 @ul
 
 - Сергей Лежнин
