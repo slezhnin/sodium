@@ -55,16 +55,13 @@
 @transition[none]
 
 @snap[north]
-@quote(@fa[question] Мёрдж, комит, бранч, ревёрт)
+### @fa[question] Мёрдж, комит, бранч, ревёрт)
 @ulend
 
 @snap[west]
+@quote[Что это, Бэрримор?](​Это Git, сэр!)​
+
 @ul
-
-- Что это, Бэрримор?​
-- Это Git, сэр!​
-
-<br>
 
 - QR CODE для репозитория @fa[long-arrow-right]
 - https://github.com/slezhnin/sodium
