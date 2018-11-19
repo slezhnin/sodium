@@ -72,7 +72,7 @@
 @ulend
 @snapend
 
-@snap[east]
+@snap[south-east]
 ![QR](assets/logo_qr.png)
 @snapend
 
