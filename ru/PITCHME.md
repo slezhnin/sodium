@@ -60,7 +60,9 @@
 
 @snap[west]
 @quote[Что это, Бэрримор?](​Это Git, сэр!)​
+@snapend
 
+@snap[south-west]
 @ul
 
 - QR CODE для репозитория @fa[long-arrow-right]
@@ -72,7 +74,7 @@
 @ulend
 @snapend
 
-@snap[south-east]
+@snap[east]
 ![QR](assets/logo_qr.png)
 @snapend
 
