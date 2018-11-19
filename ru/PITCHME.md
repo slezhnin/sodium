@@ -7,7 +7,7 @@
 @snapend
 
 @snap[east]
-![Profile Photo](assets/profile_photo.jpg)
+![Profile Photo](assets/profile_photo_2.jpg)
 @snapend
 
 @snap[west]
