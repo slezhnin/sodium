@@ -1,9 +1,14 @@
+@transition[none]
+
 ### @fa[space-shuttle] Быстрый доступ к медленным данным​
 
 Или как заставить ленивых  котиков  быстро бегать​
 
+@snap[east]
 ![Profile Photo](assets/profile_photo.jpg)
+@snapend
 
+@snap[west]
 @ul
 
 - Сергей Лежнин
@@ -11,8 +16,11 @@
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
 
 @ulend
+@snapend
 
+@snap[south]
 [Vert.x](https://vertx.io) [Kotlin](https://kotlinlang.org)
+@snapend
 
 ---
 ### @fa[compass] Тезисы​
