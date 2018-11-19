@@ -1,4 +1,4 @@
-## @fa[space-shuttle] Быстрый доступ к медленным данным​
+### @fa[space-shuttle] Быстрый доступ к медленным данным​
 
 Или как заставить ленивых  котиков  быстро бегать​
 
@@ -15,7 +15,7 @@
 [Vert.x](https://vertx.io) [Kotlin](https://kotlinlang.org)
 
 ---
-## @fa[compass] Тезисы​
+### @fa[compass] Тезисы​
 
 @ul
 
@@ -27,7 +27,7 @@
 @ulend
 
 ---
-## @fa[file] JSON, HOCON, YAML?​
+### @fa[file] JSON, HOCON, YAML?​
 
 @ul
 
@@ -43,7 +43,7 @@
 ---?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
 ---?image=assets/logo_qr.png&position=bottom 49px right 9px&size=399px 399px
-## @fa[question] Мёрдж, комит, бранч, ревёрт
+### @fa[question] Мёрдж, комит, бранч, ревёрт
 
 @ul
 
@@ -64,7 +64,7 @@
 @ulend
 
 ---
-## @fa[code-fork] Git – это мягкий и пушистый котик​
+### @fa[code-fork] Git – это мягкий и пушистый котик​
 
 @ul
 
@@ -80,7 +80,7 @@
 @ulend
 
 ---
-## Пара слов об Eclipse Vert.x
+### Пара слов об Eclipse Vert.x
 
 @ul
 
@@ -95,7 +95,7 @@
 @ulend
 
 ---
-## Общая схема
+### Общая схема
 
 ![General Schema](assets/general_schema.png)
 
