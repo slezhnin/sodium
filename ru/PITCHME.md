@@ -1,8 +1,10 @@
 @transition[none]
 
-### @fa[space-shuttle] Быстрый доступ к медленным данным​
+@snap[north]
+#### @fa[space-shuttle] Быстрый доступ к медленным данным​
 
 Или как заставить ленивых  котиков  быстро бегать​
+@snapend
 
 @snap[east]
 ![Profile Photo](assets/profile_photo.jpg)
