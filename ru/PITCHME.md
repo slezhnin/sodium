@@ -23,7 +23,7 @@
 [Vert.x](https://vertx.io) @fa[chevron-left] [Kotlin](https://kotlinlang.org)
 @snapend
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### @fa[compass] Тезисы​
 
 @ul
@@ -35,7 +35,7 @@
 
 @ulend
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### @fa[file] JSON, HOCON, YAML?​
 
 @ul
@@ -49,7 +49,7 @@
 
 @ulenf
 
----?code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg&code=sodium-store/src/main/run/sodium-store.json&lang=json&title=@fa[file-code-o] JSON Configuration File
 
 ---?image=assets/logo_qr.png&position=bottom 49px right 9px&size=299px 299px
 ### @fa[question] Мёрдж, комит, бранч, ревёрт
@@ -72,7 +72,7 @@
 
 @ulend
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### @fa[code-fork] Git – это мягкий и пушистый котик​
 
 @ul
@@ -88,7 +88,7 @@
 
 @ulend
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### Пара слов об Eclipse Vert.x
 
 @ul
@@ -103,7 +103,7 @@
 
 @ulend
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### Общая схема
 
 ![General Schema](assets/general_schema.png)
@@ -150,9 +150,9 @@
 
 +++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ChangeHandler.kt&lang=kotlin&title=Change Handler
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ## @fa[spinner fa-pulse fa-fw] Живая демострация котиков
 
----
+---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ## @fa[check-square-o] Конец презентации
 ### @fa[thumbs-o-up] Спасибо за внимание!
