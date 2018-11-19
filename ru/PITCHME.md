@@ -58,11 +58,9 @@
 #### @fa[question] Мёрдж, комит, бранч, ревёрт
 @snapend
 
-@snap[west]
-@quote[Что это, Бэрримор?](​Это Git, сэр!)​
-@snapend
-
 @snap[south-west]
+@quote[Что это, Бэрримор?](​Это Git, сэр!)​
+
 @ul
 
 - QR CODE для репозитория @fa[long-arrow-right]
