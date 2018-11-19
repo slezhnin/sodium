@@ -1,16 +1,17 @@
-## @fa[thumbs-up] Быстрый доступ к медленным данным​
+## @fa[space-shuttle] Быстрый доступ к медленным данным​
 
 Или как заставить ленивых  котиков  быстро бегать​
 
----?image=assets/profile_photo.jpg&position=bottom 49px right 9px&size=434px 326px
-### @fa[briefcase] О докладчике
 @ul
 
 - Сергей Лежнин
-- Разработчик в Сбербанк Технологии
+- Сбербанк Технологии
 - [s.lezhnin@gmail.com](mailto:s.lezhnin@gmail.com)
+- ![Profile Photo](assets/profile_photo.jpg)
 
 @ulend
+
+[Vert.x](https://vertx.io) [Kotlin](https://kotlinlang.org)
 
 ---
 ## @fa[compass] Тезисы​
