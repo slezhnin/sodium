@@ -55,7 +55,7 @@
 @transition[none]
 
 @snap[north]
-### @fa[question] Мёрдж, комит, бранч, ревёрт)
+#### @fa[question] Мёрдж, комит, бранч, ревёрт
 @snapend
 
 @snap[west]
@@ -64,6 +64,9 @@
 @ul
 
 - QR CODE для репозитория @fa[long-arrow-right]
+
+<br>
+
 - https://github.com/slezhnin/sodium
 
 @ulend
