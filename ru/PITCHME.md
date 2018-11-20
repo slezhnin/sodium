@@ -107,8 +107,8 @@
 
 @ulend
 
----?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
-### Общая схема
+---?image=assets/bg/cat-schema.jpg
+### Схема котэ
 
 ![General Schema](assets/general_schema.png)
 
