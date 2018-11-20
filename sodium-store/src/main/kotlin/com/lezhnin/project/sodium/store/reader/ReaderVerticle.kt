@@ -14,7 +14,7 @@ class ReaderVerticle : AbstractVerticle() {
         val logger = LoggerFactory.getLogger(ReaderVerticle::class.java)
         val options = ConfigRetrieverOptions(
             includeDefaultStores = true,
-            scanPeriod = 10000
+            scanPeriod = 5000
         )
         logger.debug("config(): {}", config().encodePrettily())
         val retriever = ConfigRetriever.create(getVertx(), options)
