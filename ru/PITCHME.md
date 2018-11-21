@@ -130,9 +130,10 @@
 
 ---?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/ReaderVerticle.kt&lang=kotlin&title=Reader Verticle
 
-@[10-20](Инициализация конфигурации)
+@[13-20](Инициализация конфигурации)
 @[22-28](Обработчик получения начальной конфигурации)
-@[22-28](Обработчик обновления начальной конфигурации)
+@[29-32](Обработчик обновления начальной конфигурации)
+@[35-38](Метод замены главной конфигурации)
 
 +++?code=sodium-store/src/main/kotlin/com/lezhnin/project/sodium/store/reader/MasterConfig.kt&lang=kotlin&title=Master Config
 
