@@ -25,5 +25,5 @@ class SodiumVerticle : AbstractVerticle() {
 }
 
 fun main(args: Array<String>) {
-    Launcher.main(arrayOf("run", SodiumVerticle::class.java.canonicalName))
+    Launcher.main(arrayOf("run", SodiumVerticle::class.java.canonicalName) + args)
 }
