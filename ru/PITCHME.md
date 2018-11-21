@@ -1,6 +1,11 @@
 ---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 @transition[none]
 
+Note:
+
+- Расскажу как ускорить доступ к медленным данным
+- Покажу пример реализации
+
 @snap[north]
 @box[bg-green text-white waved](@fa[space-shuttle] Быстрый доступ к медленным данным​#Или как заставить ленивых  котиков  быстро бегать​)
 @snapend
