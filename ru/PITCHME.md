@@ -1,10 +1,4 @@
 ---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
-
-Note:
-
-- Расскажу как ускорить доступ к медленным данным
-- Покажу пример реализации
-
 @transition[none]
 
 @snap[north]
@@ -28,6 +22,11 @@ Note:
 @snap[south]
 [Vert.x](https://vertx.io) @fa[chevron-left] [Kotlin](https://kotlinlang.org)
 @snapend
+
+Note:
+
+- Расскажу как ускорить доступ к медленным данным
+- Покажу пример реализации
 
 ---?image=assets/bg/lazy-cats-leaves-animals-opt.jpg
 ### @fa[compass] Тезисы​
