@@ -6,7 +6,7 @@
       "config": {
         "url": "https://github.com/slezhnin/sodium.git",
         "branch": "test-master-config",
-        "path": "test-master-config",
+        "path": "build/test-master-config",
         "filesets": [
           {
             "pattern": "*.json"
