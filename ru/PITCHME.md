@@ -137,7 +137,12 @@ Note:
 @ulend
 
 ---?image=assets/bg/cat-schema.jpg
-### Схема котэ
+### Краткая схема
+
+![Brief Schema](assets/brief_schema.png)
+
++++?image=assets/bg/cat-schema.jpg
+### Общая схема
 
 ![General Schema](assets/general_schema.png)
 
