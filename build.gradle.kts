@@ -49,6 +49,7 @@ project("sodium-store") {
         compile(group = "io.vertx", name = "vertx-config-git", version = vertxVersion)
         compile(group = "io.vertx", name = "vertx-web", version = vertxVersion)
         compile(group = "io.vertx", name = "vertx-web-client", version = vertxVersion)
+        compile(group = "io.vertx", name = "vertx-lang-kotlin-coroutines", version = vertxVersion)
     }
 
     tasks.withType<ShadowJar> {

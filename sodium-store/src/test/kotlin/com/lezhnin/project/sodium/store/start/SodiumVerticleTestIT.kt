@@ -148,7 +148,7 @@ class SodiumVerticleTestIT : StringSpec() {
 
             whenReady(responseFuture) {
                 it.statusCode() shouldBe 404
-                it.statusMessage() shouldBe "Error get value for: ${TestData.UNTEST}"
+                it.statusMessage() shouldBe "Found no value in map: ${Sodium.DEFAULT_MAP_NAME} for key: ${TestData.UNTEST}"
             }
         }
     }
