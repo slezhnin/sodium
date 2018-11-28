@@ -6,21 +6,21 @@ interface Parameter<V> {
 }
 
 interface ChangeSource<T> {
+    val initial: T?
     fun consumer(consumer: (T) -> Unit)
 }
 
 class ReloadableParameter<T, V>(
     override val key: String,
     changeSource: ChangeSource<T>,
-    initialValue: T,
-    transform: (T) -> V
+    transform: (T?) -> V?
 ) : Parameter<V> {
 
     override val value: V
-        get() = reloadbleValue
+        get() = reloadbleValue!!
 
     @Volatile
-    private var reloadbleValue = transform(initialValue)
+    private var reloadbleValue = transform(changeSource.initial)
 
     init {
         changeSource.consumer {
