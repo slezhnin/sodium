@@ -28,15 +28,10 @@ class PrimaryKeyRequestHandler : RequestHandler {
             if (asyncMap.succeeded()) {
                 asyncMap.result().get(primaryKey) { json ->
                     if (json.succeeded() && json.result() != null) {
-                        logger.info("Found value in map: $mapName for name: $primaryKey")
                         resultFuture.complete(
-                            JsonRequestResult(
-                                json.result(),
-                                headers = mapOf(
-                                    Pair("content-type", "application/json")
-                                )
-                            )
+                            JsonRequestResult(json.result())
                         )
+                        logger.info("Found value in map: $mapName for name: $primaryKey")
                     } else {
                         resultFuture.complete(
                             FailedRequestResult(

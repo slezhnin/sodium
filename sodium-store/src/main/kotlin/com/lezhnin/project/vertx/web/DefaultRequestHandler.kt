@@ -22,6 +22,7 @@ class DefaultRequestHandler(
                     when (this) {
                         is JsonRequestResult -> result.toBuffer().apply {
                             response()
+                                .putHeader("content-type", "application/json")
                                 .putHeader("content-length", length().toString())
                                 .write(this)
                                 .end()
