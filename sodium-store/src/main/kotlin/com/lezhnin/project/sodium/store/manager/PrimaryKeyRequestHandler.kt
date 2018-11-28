@@ -2,9 +2,7 @@ package com.lezhnin.project.sodium.store.manager
 
 import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Web
-import com.lezhnin.project.vertx.web.RequestHandler
-import com.lezhnin.project.vertx.web.RequestResult
-import com.lezhnin.project.vertx.web.RequestStatus
+import com.lezhnin.project.vertx.web.*
 import io.vertx.core.Future
 import io.vertx.core.Future.future
 import io.vertx.core.Future.succeededFuture
@@ -16,7 +14,7 @@ class PrimaryKeyRequestHandler : RequestHandler {
     override fun handle(context: RoutingContext, config: JsonObject, logger: Logger): Future<RequestResult> {
         val mapName = config.getString(Sodium.MAP_NAME, Sodium.DEFAULT_MAP_NAME)
         val primaryKey = context.request().getParam(Web.PARAMETER) ?: return succeededFuture(
-            RequestResult(
+            FailedRequestResult(
                 status = RequestStatus(
                     404,
                     "Request parameter ${Web.PARAMETER} is not found!"
@@ -30,10 +28,10 @@ class PrimaryKeyRequestHandler : RequestHandler {
             if (asyncMap.succeeded()) {
                 asyncMap.result().get(primaryKey) { json ->
                     if (json.succeeded() && json.result() != null) {
-                        logger.info("Found value in map: $mapName for key: $primaryKey")
+                        logger.info("Found value in map: $mapName for name: $primaryKey")
                         resultFuture.complete(
-                            RequestResult(
-                                buffer = json.result().toBuffer(),
+                            JsonRequestResult(
+                                json.result(),
                                 headers = mapOf(
                                     Pair("content-type", "application/json")
                                 )
@@ -41,10 +39,10 @@ class PrimaryKeyRequestHandler : RequestHandler {
                         )
                     } else {
                         resultFuture.complete(
-                            RequestResult(
+                            FailedRequestResult(
                                 status = RequestStatus(
                                     404,
-                                    "Found no value in map: $mapName for key: $primaryKey"
+                                    "Found no value in map: $mapName for name: $primaryKey"
                                 )
                             )
                         )

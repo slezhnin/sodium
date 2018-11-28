@@ -10,11 +10,18 @@ class ManagerVerticle : AbstractVerticle() {
     override fun start() {
         val logger = LoggerFactory.getLogger(ManagerVerticle::class.java)!!
         val router = Router.router(getVertx())
+        val primaryKeyRequestHandler = PrimaryKeyRequestHandler()
+        val secondaryKeyRequestHandler = SecondaryKeyRequestHandler(primaryKeyRequestHandler)
 
         router
             .route("${Web.PATH}:${Web.PARAMETER}")
             .handler(
-                DefaultRequestHandler(PrimaryKeyRequestHandler(), config(), logger)
+                DefaultRequestHandler(primaryKeyRequestHandler, config(), logger)
+            )
+        router
+            .route("${Web.PATH}:${Web.PARAMETER}/:${Web.SECONDARY_PARAMETER}")
+            .handler(
+                DefaultRequestHandler(secondaryKeyRequestHandler, config(), logger)
             )
 
         getVertx().createHttpServer().requestHandler {

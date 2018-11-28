@@ -1,9 +1,18 @@
 package com.lezhnin.project.vertx.web
 
-import io.vertx.core.buffer.Buffer
+import io.vertx.core.json.JsonObject
 
-data class RequestResult(
-    val buffer: Buffer? = null,
-    val status: RequestStatus? = null,
-    val headers: Map<String, String> = emptyMap()
-)
+interface RequestResult {
+    val headers: Map<String, String>
+}
+
+data class JsonRequestResult(
+    val result: JsonObject,
+    override val headers: Map<String, String> = emptyMap()
+) : RequestResult
+
+
+data class FailedRequestResult(
+    val status: RequestStatus,
+    override val headers: Map<String, String> = emptyMap()
+) : RequestResult

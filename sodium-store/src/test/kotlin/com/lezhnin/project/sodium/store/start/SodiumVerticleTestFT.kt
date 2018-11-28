@@ -35,8 +35,11 @@ object TestData {
     const val TEST0 = "test0"
     const val TEST1 = "test1"
     const val TEST2 = "test2"
+    const val TEST3 = "test3"
+    const val TEST4 = "test4"
     const val TEST1V = "Test 1"
     const val TEST2V = "Test 2"
+    const val TEST4V = "Test 4"
     const val UNTEST = "untest"
     const val TEST_PORT = 8081
 
@@ -53,7 +56,10 @@ object TestData {
                                     Store.TYPE to Store.Type.JSON,
                                     Store.CONFIG to obj(
                                         TEST1 to TEST1V,
-                                        TEST2 to TEST2V
+                                        TEST2 to TEST2V,
+                                        TEST3 to obj(
+                                            TEST4 to TEST4V
+                                        )
                                     )
                                 )
                             )
@@ -107,12 +113,12 @@ object VertxTester : TestListener {
     }
 }
 
-class SodiumVerticleTestIT : StringSpec() {
+class SodiumVerticleTestFT : StringSpec() {
 
     override fun listeners(): List<TestListener> = listOf(VertxTester)
 
     init {
-        "success" {
+        "success with primary key" {
             val jsonFuture = CompletableFuture<JsonObject>()
 
             VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}").send {
@@ -135,7 +141,7 @@ class SodiumVerticleTestIT : StringSpec() {
             }
         }
 
-        "failure" {
+        "failure with primary key" {
             val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
 
             VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.UNTEST}").send {
@@ -148,7 +154,63 @@ class SodiumVerticleTestIT : StringSpec() {
 
             whenReady(responseFuture) {
                 it.statusCode() shouldBe 404
-                it.statusMessage() shouldBe "Found no value in map: ${Sodium.DEFAULT_MAP_NAME} for key: ${TestData.UNTEST}"
+                it.statusMessage() shouldBe "Found no value in map: ${Sodium.DEFAULT_MAP_NAME} for name: ${TestData.UNTEST}"
+            }
+        }
+
+        "success with secondary key" {
+            val jsonFuture = CompletableFuture<JsonObject>()
+
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}/${TestData.TEST3}").send {
+                if (it.succeeded()) {
+                    try {
+                        jsonFuture.complete(it.result().bodyAsJsonObject())
+                    } catch (e: Exception) {
+                        jsonFuture.completeExceptionally(e)
+                    }
+                } else {
+                    jsonFuture.completeExceptionally(it.cause())
+                }
+            }
+
+            whenReady(jsonFuture) {
+                VertxTester.logger.info(it)
+
+                it.getString(TestData.TEST4) shouldBe TestData.TEST4V
+            }
+        }
+
+        "failure with secondary key" {
+            val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
+
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}/${TestData.UNTEST}").send {
+                if (it.succeeded()) {
+                    responseFuture.complete(it.result())
+                } else {
+                    responseFuture.completeExceptionally(it.cause())
+                }
+            }
+
+            whenReady(responseFuture) {
+                it.statusCode() shouldBe 404
+                it.statusMessage() shouldBe "Found no value for key: ${TestData.UNTEST}"
+            }
+        }
+
+        "failure with secondary key value type" {
+            val responseFuture = CompletableFuture<HttpResponse<Buffer>>()
+
+            VertxTester.client.get(TEST_PORT, "localhost", "${Web.PATH}${TestData.TEST0}/${TestData.TEST1}").send {
+                if (it.succeeded()) {
+                    responseFuture.complete(it.result())
+                } else {
+                    responseFuture.completeExceptionally(it.cause())
+                }
+            }
+
+            whenReady(responseFuture) {
+                it.statusCode() shouldBe 404
+                it.statusMessage() shouldBe "The value for key: ${TestData.TEST1} is not JSON"
             }
         }
     }
