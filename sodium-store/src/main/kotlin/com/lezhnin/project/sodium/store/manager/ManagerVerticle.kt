@@ -12,9 +12,7 @@ class ManagerVerticle : AbstractVerticle() {
         val router = Router.router(getVertx())
 
         router
-            .routeWithRegex(
-                "${Web.PATH.replace("/", "\\/")}(?<${Web.PARAMETER}>[^\\/]+)(?<${Web.VALUE_PATH}>[^\\?]+)"
-            )
+            .route("${Web.PATH}:${Web.PARAMETER}")
             .handler(
                 ManagerDataRequestHandler(
                     config().getString(Sodium.MAP_NAME, Sodium.DEFAULT_MAP_NAME),

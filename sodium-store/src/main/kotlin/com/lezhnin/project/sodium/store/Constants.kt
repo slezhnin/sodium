@@ -22,6 +22,5 @@ object Store {
 object Web {
     const val PATH = "/data/"
     const val PARAMETER = "name"
-    const val VALUE_PATH = "path"
     const val PORT = "http.port"
 }
