@@ -6,6 +6,9 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
+import io.vertx.ext.web.handler.sockjs.SockJSHandler
+import io.vertx.kotlin.ext.web.handler.sockjs.BridgeOptions
+import io.vertx.kotlin.ext.web.handler.sockjs.PermittedOptions
 
 class ManagerVerticle : AbstractVerticle() {
     override fun start() {
@@ -16,7 +19,7 @@ class ManagerVerticle : AbstractVerticle() {
 
         router
             .route()
-            .handler(StaticHandler.create())
+            .handler(StaticHandler.create().setCachingEnabled(false))
         router
             .route("${Web.PATH}:${Web.PARAMETER}")
             .handler(
@@ -26,6 +29,18 @@ class ManagerVerticle : AbstractVerticle() {
             .route("${Web.PATH}:${Web.PARAMETER}/:${Web.SECONDARY_PARAMETER}")
             .handler(
                 DefaultRequestHandler(secondaryKeyRequestHandler, config(), logger)
+            )
+        router
+            .route("/eventbus/*")
+            .handler(
+                SockJSHandler
+                    .create(vertx)
+                    .bridge(
+                        BridgeOptions(
+                            outboundPermitted = listOf(PermittedOptions(addressRegex = "out")),
+                            inboundPermitted = listOf(PermittedOptions(addressRegex = "in"))
+                        )
+                    )
             )
 
         getVertx().createHttpServer().requestHandler {
