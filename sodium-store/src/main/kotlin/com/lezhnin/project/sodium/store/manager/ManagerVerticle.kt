@@ -5,6 +5,7 @@ import com.lezhnin.project.vertx.web.DefaultRequestHandler
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.StaticHandler
 
 class ManagerVerticle : AbstractVerticle() {
     override fun start() {
@@ -13,6 +14,9 @@ class ManagerVerticle : AbstractVerticle() {
         val primaryKeyRequestHandler = PrimaryKeyRequestHandler()
         val secondaryKeyRequestHandler = SecondaryKeyRequestHandler(primaryKeyRequestHandler)
 
+        router
+            .route()
+            .handler(StaticHandler.create())
         router
             .route("${Web.PATH}:${Web.PARAMETER}")
             .handler(
