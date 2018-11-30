@@ -1,18 +1,17 @@
 package com.lezhnin.project.sodium.store.manager
 
-import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Web
-import com.lezhnin.project.vertx.web.*
+import com.lezhnin.project.vertx.web.FailedRequestResult
+import com.lezhnin.project.vertx.web.RequestHandler
+import com.lezhnin.project.vertx.web.RequestResult
+import com.lezhnin.project.vertx.web.RequestStatus
 import io.vertx.core.Future
-import io.vertx.core.Future.future
 import io.vertx.core.Future.succeededFuture
-import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.Logger
 import io.vertx.ext.web.RoutingContext
 
-class PrimaryKeyRequestHandler : RequestHandler {
-    override fun handle(context: RoutingContext, config: JsonObject, logger: Logger): Future<RequestResult> {
-        val mapName = config.getString(Sodium.MAP_NAME, Sodium.DEFAULT_MAP_NAME)
+class PrimaryKeyRequestHandler(private val dataService: DataService, val logger: Logger) : RequestHandler {
+    override fun handle(context: RoutingContext): Future<RequestResult> {
         val primaryKey = context.request().getParam(Web.PARAMETER) ?: return succeededFuture(
             FailedRequestResult(
                 status = RequestStatus(
@@ -22,32 +21,6 @@ class PrimaryKeyRequestHandler : RequestHandler {
             )
         )
 
-        val resultFuture = future<RequestResult>()
-
-        context.vertx().sharedData().getAsyncMap<String, JsonObject>(mapName) { asyncMap ->
-            if (asyncMap.succeeded()) {
-                asyncMap.result().get(primaryKey) { json ->
-                    if (json.succeeded() && json.result() != null) {
-                        resultFuture.complete(
-                            JsonRequestResult(json.result())
-                        )
-                        logger.info("Found value in map: $mapName for name: $primaryKey")
-                    } else {
-                        resultFuture.complete(
-                            FailedRequestResult(
-                                status = RequestStatus(
-                                    404,
-                                    "Found no value in map: $mapName for name: $primaryKey"
-                                )
-                            )
-                        )
-                    }
-                }
-            } else {
-                resultFuture.fail(asyncMap.cause())
-            }
-        }
-
-        return resultFuture
+        return dataService.request(primaryKey)
     }
 }

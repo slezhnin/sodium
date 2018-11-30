@@ -1,5 +1,6 @@
 package com.lezhnin.project.sodium.store.manager
 
+import com.lezhnin.project.sodium.store.Sodium
 import com.lezhnin.project.sodium.store.Web
 import com.lezhnin.project.vertx.web.DefaultRequestHandler
 import io.vertx.core.AbstractVerticle
@@ -12,10 +13,12 @@ import io.vertx.kotlin.ext.web.handler.sockjs.PermittedOptions
 
 class ManagerVerticle : AbstractVerticle() {
     override fun start() {
+        val mapName = config().getString(Sodium.MAP_NAME, Sodium.DEFAULT_MAP_NAME)
         val logger = LoggerFactory.getLogger(ManagerVerticle::class.java)!!
         val router = Router.router(getVertx())
-        val primaryKeyRequestHandler = PrimaryKeyRequestHandler()
-        val secondaryKeyRequestHandler = SecondaryKeyRequestHandler(primaryKeyRequestHandler)
+        val dataService = PrimaryDataService(vertx, mapName, logger)
+        val primaryKeyRequestHandler = PrimaryKeyRequestHandler(dataService, logger)
+        val secondaryKeyRequestHandler = SecondaryKeyRequestHandler(dataService, logger)
 
         router
             .route()
@@ -23,12 +26,12 @@ class ManagerVerticle : AbstractVerticle() {
         router
             .route("${Web.PATH}:${Web.PARAMETER}")
             .handler(
-                DefaultRequestHandler(primaryKeyRequestHandler, config(), logger)
+                DefaultRequestHandler(primaryKeyRequestHandler, logger)
             )
         router
             .route("${Web.PATH}:${Web.PARAMETER}/:${Web.SECONDARY_PARAMETER}")
             .handler(
-                DefaultRequestHandler(secondaryKeyRequestHandler, config(), logger)
+                DefaultRequestHandler(secondaryKeyRequestHandler, logger)
             )
         router
             .route("/eventbus/*")
@@ -37,8 +40,8 @@ class ManagerVerticle : AbstractVerticle() {
                     .create(vertx)
                     .bridge(
                         BridgeOptions(
-                            outboundPermitted = listOf(PermittedOptions(addressRegex = "out")),
-                            inboundPermitted = listOf(PermittedOptions(addressRegex = "in"))
+                            outboundPermitted = listOf(PermittedOptions(addressRegex = "sodium\\.out.*")),
+                            inboundPermitted = listOf(PermittedOptions(address = "sodium.in.request"))
                         )
                     )
             )
@@ -50,5 +53,7 @@ class ManagerVerticle : AbstractVerticle() {
         }.listen(
             config().getInteger(Web.PORT, 8080)
         )
+
+        vertx.eventBus().consumer<String>("sodium.in.request", EventBusRequestHandler(dataService, logger))
     }
 }

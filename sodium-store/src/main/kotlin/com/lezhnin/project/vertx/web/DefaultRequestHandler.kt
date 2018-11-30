@@ -7,12 +7,11 @@ import io.vertx.ext.web.RoutingContext
 
 class DefaultRequestHandler(
     private val requestHandler: RequestHandler,
-    private val config: JsonObject,
-    private val logger: Logger
+    val logger: Logger
 ) : Handler<RoutingContext> {
     override fun handle(event: RoutingContext?) {
         event?.apply {
-            requestHandler.handle(event, config, logger).setHandler { ar ->
+            requestHandler.handle(event).setHandler { ar ->
                 if (ar.succeeded()) {
                     ar.result()
                 } else {
