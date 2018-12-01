@@ -5,47 +5,36 @@ import com.lezhnin.project.vertx.web.JsonRequestResult
 import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
 import io.vertx.core.logging.Logger
-import io.vertx.kotlin.core.json.json
+
+data class Success(val message: String)
+data class Failure(val message: String)
 
 class EventBusRequestHandler(private val dataService: DataService, val logger: Logger) : Handler<Message<String>> {
-    override fun handle(event: Message<String>) {
-        logger.debug("EventBus Request: ${event.body()}")
+    override fun handle(message: Message<String>) {
+        logger.debug("EventBus Request: ${message.body()}")
 
-        if (event.body().isNullOrBlank()) {
-            logger.error("EventBus Request: is empty!")
-            event.reply(json { "error" to "Empty request!" })
-            return
-        }
-
-        if (event.body().contains('/')) {
-            val r = event.body().split('/', limit = 2)
+        if (message.body().contains('/')) {
+            val r = message.body().split('/', limit = 2)
             dataService.chain(r.first()).request(r.last())
         } else {
-            dataService.request(event.body())
+            dataService.request(message.body())
         }.setHandler {
-            event.reply(
-                if (it.succeeded()) {
-                    when (val request = it.result()) {
-                        is JsonRequestResult -> json {
-                            "key" to event.body()
-                            "result" to request.result
-                        }
-                        is FailedRequestResult -> json {
-                            "key" to event.body()
-                            "error" to request.status.message
-                        }
-                        else -> json {
-                            "key" to event.body()
-                            "error" to "Unknown result error!"
-                        }
-                    }
-                } else {
-                    json {
-                        "key" to event.body()
-                        "error" to it.cause().message
-                    }
+            reply(
+                message,
+                if (it.succeeded()) when (val request = it.result()) {
+                    is JsonRequestResult -> Success(request.result.encodePrettily())
+                    is FailedRequestResult -> Failure(request.status.message)
+                    else -> Failure("Unknown result error!")
                 }
+                else Failure(it.cause().message.orEmpty())
             )
+        }
+    }
+
+    private fun reply(message: Message<String>, result: Any) {
+        when (result) {
+            is Success -> message.reply(result.message)
+            is Failure -> message.fail(404, result.message)
         }
     }
 }

@@ -8,11 +8,18 @@
     <script src="js/app.js"></script>
 </head>
 <body onload="init();">
-<h3>Counter</h3>
-Current value:
-<span id="current_value"></span>
+<h3>Vert.x Event Bus Sodium Client</h3>
 <div>
+    Key:
+    <input id="key_input"placeholder="enter key" type="text" size="20" onkeydown="sendMessage(this)">
     <input type="button" onclick="request();" value="Request">
 </div>
+<p>
+    Current value:
+    <div id="current_value"></div>
+</p>
+<p>
+    <span id="error_value" style="color: crimson"></span>
+</p>
 </body>
 </html>

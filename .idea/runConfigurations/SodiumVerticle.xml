@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SodiumVerticle" type="JetRunConfigurationType" factoryName="Kotlin">
+    <module name="sodium-store_main" />
+    <option name="VM_PARAMETERS" value="-Dvertx.disableFileCaching=true -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory" />
+    <option name="PROGRAM_PARAMETERS" value="-conf src/main/run/sodium-store.json" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="MAIN_CLASS_NAME" value="com.lezhnin.project.sodium.store.start.SodiumVerticleKt" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_WORKING_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

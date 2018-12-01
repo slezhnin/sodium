@@ -1,24 +1,36 @@
 function init() {
-    registerHandler();
+    eventBus = new EventBus('/eventbus');
 }
 
-let eventBus;
+var eventBus;
+var consumer;
 
-function registerHandler() {
-    eventBus = new EventBus('/eventbus');
-    eventBus.onopen = function () {
-        eventBus.registerHandler('sodium.out/TEST1', function (error, message) {
-            document.getElementById('current_value').innerHTML = message.body;
-        });
+function sendMessage(key) {
+    if (event.type === 'keydown' && event.key !== 'Enter') {
+        return
     }
+    console.log('input key', key.value);
+    if (consumer !== undefined && consumer != null) {
+        eventBus.unregisterHandler('sodium.out/' + key.value, consumer);
+    }
+    eventBus.send('sodium.in.request', key.value, function (error, message) {
+        if (error == null) {
+            console.log('reply message', message);
+            document.getElementById('current_value').innerHTML = message.body;
+            document.getElementById('error_value').innerHTML = '';
+        } else {
+            console.log('reply error', error);
+            document.getElementById('current_value').innerHTML = '';
+            document.getElementById('error_value').innerHTML = error.message;
+        }
+    });
+    consumer = function (message) {
+        console.log("consume message", message);
+        document.getElementById('current_value').innerHTML = message.body;
+    };
+    eventBus.registerHandler('sodium.out/' + key.value, consumer)
 }
 
 function request() {
-    eventBus.send('sodium.in.request', 'TEST1', function (ar, ar_err) {
-        if (ar_err == null) {
-            document.getElementById('current_value').innerHTML = ar.body();
-        } else {
-            console.log(ar_err)
-        }
-    })
+    sendMessage(document.getElementById('key_input'));
 }
