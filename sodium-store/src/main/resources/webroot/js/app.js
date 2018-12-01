@@ -24,7 +24,7 @@ function sendMessage(key) {
             document.getElementById('error_value').innerHTML = error.message;
         }
     });
-    consumer = function (message) {
+    consumer = function (error, message) {
         console.log("consume message", message);
         document.getElementById('current_value').innerHTML = message.body;
     };

@@ -47,7 +47,7 @@ class MasterConfig(
         json.fieldNames().forEach { key ->
             val retriever = configRetriever(json.getJsonObject(key))
             val readHandler = ReadHandler(
-                vertx.sharedData(),
+                vertx,
                 mainConfig.getString(Sodium.MAP_NAME, Sodium.DEFAULT_MAP_NAME),
                 key,
                 logger

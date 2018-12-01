@@ -2,12 +2,13 @@ package com.lezhnin.project.sodium.store.reader
 
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
+import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.Logger
 import io.vertx.core.shareddata.SharedData
 
 class ReadHandler(
-    private val sharedData: SharedData,
+    private val vertx: Vertx,
     private val mapName: String,
     private val key: String,
     private val logger: Logger
@@ -20,7 +21,7 @@ class ReadHandler(
     }
 
     fun read(json: JsonObject) {
-        sharedData.getAsyncMap<String, JsonObject>(mapName) {
+        vertx.sharedData().getAsyncMap<String, JsonObject>(mapName) {
             if (it.succeeded()) {
                 it.result().put(key, json) { result ->
                     if (result.succeeded()) {
@@ -33,5 +34,6 @@ class ReadHandler(
                 logger.error("Error getting AsyncMap: $mapName", it.cause())
             }
         }
+        vertx.eventBus().publish("sodium.out/$key", json.encodePrettily())
     }
 }
