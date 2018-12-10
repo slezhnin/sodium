@@ -4,8 +4,8 @@
     {
       "type": "git",
       "config": {
-        "url": "https://github.com/slezhnin/sodium.git",
-        "branch": "test-master-config",
+        "url": "http://localhost:8180/sodium/sodium-config.git",
+        "branch": "master",
         "path": "build/test-master-config",
         "filesets": [
           {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{:ss} %.-1level %logger{0}: %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="io.netty" level="info"
+            additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="io.vertx" level="info"
+            additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="org.eclipse" level="info"
+            additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
